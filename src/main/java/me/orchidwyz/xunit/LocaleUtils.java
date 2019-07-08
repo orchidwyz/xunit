@@ -6,6 +6,36 @@ public class LocaleUtils {
 
     private static final String EMPTY = "";
 
+    /**
+     * <p>Converts a String to a Locale.</p>
+     *
+     * <p>This method takes the string format of a locale and creates the
+     * locale object from it.</p>
+     *
+     * <pre>
+     *   LocaleUtils.toLocale("")           = new Locale("", "")
+     *   LocaleUtils.toLocale("en")         = new Locale("en", "")
+     *   LocaleUtils.toLocale("en_GB")      = new Locale("en", "GB")
+     *   LocaleUtils.toLocale("en_001")     = new Locale("en", "001")
+     *   LocaleUtils.toLocale("en_GB_xxx")  = new Locale("en", "GB", "xxx")   (#)
+     * </pre>
+     *
+     * <p>(#) The behaviour of the JDK variant constructor changed between JDK1.3 and JDK1.4.
+     * In JDK1.3, the constructor upper cases the variant, in JDK1.4, it doesn't.
+     * Thus, the result from getVariant() may vary depending on your JDK.</p>
+     *
+     * <p>This method validates the input strictly.
+     * The language code must be lowercase.
+     * The country code must be uppercase.
+     * The separator must be an underscore.
+     * The length must be correct.
+     * </p>
+     *
+     * @param str the locale String to convert, null returns null
+     * @return a Locale, null if null input
+     * @throws IllegalArgumentException if the string is an invalid format
+     * @see Locale#forLanguageTag(String)
+     */
     public Locale toLocale(final String str) {
         if (str == null) {
             return null;
