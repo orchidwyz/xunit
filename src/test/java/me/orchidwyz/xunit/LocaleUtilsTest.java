@@ -188,9 +188,9 @@ public class LocaleUtilsTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void should_throw_ex_when_str_has_1_under_line_and_2nd_part_length_eq_2() {
+    public void should_throw_ex_when_str_has_1_under_line_and_2nd_part_is_empty() {
         //given
-        testStr = "ab_12";
+        testStr = "ab_";
         //when
         executeTestMethod();
         //then
@@ -204,5 +204,61 @@ public class LocaleUtilsTest {
         executeTestMethod();
         //then
         assertThat(result).isEqualToComparingFieldByField(new Locale("ab", "123"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void should_throw_ex_when_str_has_2_under_line_and_1st_part_is_not_ISO639() {
+        //given
+        testStr = "abcd_123_";
+        //when
+        executeTestMethod();
+        //then
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void should_throw_ex_when_str_has_2_under_line_and_2nd_part_is_not_ISO3166() {
+        //given
+        testStr = "ab_cd_";
+        //when
+        executeTestMethod();
+        //then
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void should_throw_ex_when_str_has_2_under_line_and_2nd_part_is_not_numeric_area_code() {
+        //given
+        testStr = "ab_12_";
+        //when
+        executeTestMethod();
+        //then
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void should_throw_ex_when_str_has_2_under_line_and_both_2nd_part_and_3th_part_are_empty() {
+        //given
+        testStr = "ab__";
+        //when
+        executeTestMethod();
+        //then
+    }
+
+    @Test
+    public void should_return_locale_when_str_has_2_under_line_and_3th_part_length_gt_0() {
+        //given
+        testStr = "ab_CD_e";
+        //when
+        executeTestMethod();
+        //then
+        assertThat(result).isEqualToComparingFieldByField(new Locale("ab", "CD", "e"));
+    }
+
+    @Test
+    public void should_return_locale_when_str_has_2_under_lin_eand_2nd_part_is_numeric_area_code_and_3th_part_length_gt_0() {
+        //given
+        testStr = "ab_001_e";
+        //when
+        executeTestMethod();
+        //then
+        assertThat(result).isEqualToComparingFieldByField(new Locale("ab", "001", "e"));
     }
 }
