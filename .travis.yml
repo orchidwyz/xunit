@@ -3,10 +3,10 @@ jdk:
   - oraclejdk8
 
 install:
-  - TERM=dumb ./gradlew assemble
+  gradle assemble
 
 script:
-  - TERM=dumb ./gradlew check -i
+  gradlew check -i
 
 after_success:
-  - ./gradlew jacocoTestReport coveralls
+  gradlew jacocoTestReport coveralls
