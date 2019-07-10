@@ -6,7 +6,7 @@ install:
   gradle assemble
 
 script:
-  gradlew check -i
+  gradle check -i
 
 after_success:
-  gradlew jacocoTestReport coveralls
+  gradle jacocoTestReport coveralls
